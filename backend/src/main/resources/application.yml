@@ -1,0 +1,23 @@
+# No defaults for secrets on purpose: the app must fail to start if they are missing.
+server:
+  port: ${SERVER_PORT:8080}
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/taskflow}
+    username: ${DB_USER:taskflow_app}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate   # Flyway owns the schema, Hibernate only checks it
+  flyway:
+    enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+app:
+  jwt:
+    secret: ${JWT_SECRET}
+  admin:
+    password: ${ADMIN_PASSWORD:}
